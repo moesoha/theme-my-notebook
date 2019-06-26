@@ -1,0 +1,16 @@
+@use super::super::statics;
+
+@()
+
+<style>
+	@@font-face @{
+		font-family: 'Soha Notebook Icons';
+		src: url('/static/theme/@(statics::Soha_Notebook_Icons_eot.name)');
+		src: url('/static/theme/@(statics::Soha_Notebook_Icons_eot.name)?#iefix') format('embedded-opentype'),
+			url('/static/theme/@(statics::Soha_Notebook_Icons_woff.name)') format('woff'),
+			url('/static/theme/@(statics::Soha_Notebook_Icons_ttf.name)') format('truetype'),
+			url('/static/theme/@(statics::Soha_Notebook_Icons_svg.name)#Soha-Notebook-Icons') format('svg');
+		font-weight: normal;
+		font-style: normal;
+	@}
+</style>

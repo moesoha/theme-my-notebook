@@ -42,13 +42,12 @@
 		<form id="comment-form" action="@post.get_comment_url()" method="POST">
 			@:csrf_input(ctx)
 			<h2>评论</h2>
-			<textarea placeholder="在这里写下你想说的……"></textarea>
+			<textarea name="text" placeholder="在这里写下你想说的……"></textarea>
 			@if let Some(u) = &ctx.user {<i>您已登入，将作为 @u.name() 发表。</i>} else {<div class="input-group">
 				<input placeholder="名字" type="text" name="name" @if let Some(o) = &previous_author {value="@o.name()" }/>
 				<input placeholder="邮箱" type="text" name="mail" @if let Some(o) = &previous_author {@if let Some(s) = &o.mail() {value="@s" }}/>
 				<input placeholder="网站(选填)" type="text" name="link" @if let Some(o) = &previous_author {@if let Some(s) = &o.link() {value="@s" }}/>
 			</div>}
-			<textarea name="text"></textarea>
 			<button style="margin-top: .6em;">发送</button><!-- submit -->
 			<button style="margin-top: .6em; display: none;" id="cancel-reply">取消回复</button>
 		</form>

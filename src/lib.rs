@@ -14,6 +14,11 @@ use sohablog_lib::{
 use std::io::{Result, Write};
 
 include!(concat!(env!("OUT_DIR"), "/templates/templates.rs"));
+impl StaticFile for &templates::statics::StaticFile {
+	fn content(&self) -> &'static [u8] { self.content }
+	fn name(&self) -> &'static str { self.name }
+	fn mime(&self) -> &'static mime::Mime { self.mime }
+}
 
 #[derive(Debug, Default)]
 pub struct MyNotebook;
@@ -34,8 +39,12 @@ impl Theme for MyNotebook {
 		templates::post_show(out, ctx, title, post, previous_author)?;
 		Ok(())
 	}
-	fn static_file(&self, _name: &str) -> std::result::Result<StaticFile, &str>{
-		Err("static file not found")
+	fn static_file(&self, name: &str) -> Option<Box<StaticFile>> {
+		if let Some(f) = templates::statics::StaticFile::get(name) {
+			Some(Box::new(f) as Box<StaticFile>)
+		} else {
+			None
+		}
 	}
 }
 

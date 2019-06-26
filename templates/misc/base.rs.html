@@ -1,3 +1,5 @@
+@use super::super::statics;
+@use super::font_face;
 @use sohablog_lib::render::*;
 
 @(_ctx: &TemplateContext, title: &str, head: Content, meta: Content, content: Content, foot: Content)
@@ -9,8 +11,9 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 		<title>@title - 海上的宫殿<!-- TODO: blog title --></title>
-		<link href="css/Soha-Notebook-Icons.css" rel="stylesheet">
-		<link href="css/paper.css" rel="stylesheet">
+@:font_face()
+		<link href="/static/theme/@(statics::Soha_Notebook_Icons_css.name)" rel="stylesheet">
+		<link href="/static/theme/@(statics::paper_css.name)" rel="stylesheet">
 @:meta()
 @:head()
 	</head>
@@ -35,6 +38,6 @@
 		</div>
 		<footer>Designed by <a href="https://sohaj.in">Soha Jin</a>.</footer>
 @:foot()
-		<script src="./paper.js"></script>
+		<script src="/static/theme/@(statics::paper_js.name)"></script>
 	</body>
 </html>
