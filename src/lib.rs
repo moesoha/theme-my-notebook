@@ -13,6 +13,22 @@ use sohablog_lib::{
 };
 use std::io::{Result, Write};
 
+mod render {
+	pub use sohablog_lib::render::*;
+	use std::io::{Result as IoResult, Write};
+
+	/// call wrapped function and write them as HTML
+	pub fn markdown_to_html(out: &mut dyn Write, ctx: &TemplateContext, s: &str) -> IoResult<()> {
+		let s = ctx.render_helper.markdown_to_html(s);
+		write!(out, "{}", s)
+	}
+
+	pub fn nl2br(out: &mut dyn Write, ctx: &TemplateContext, s: &str) -> IoResult<()> {
+		let s = ctx.render_helper.nl2br(s);
+		write!(out, "{}", s)
+	}
+}
+
 include!(concat!(env!("OUT_DIR"), "/templates/templates.rs"));
 impl StaticFile for &templates::statics::StaticFile {
 	fn content(&self) -> &'static [u8] { self.content }

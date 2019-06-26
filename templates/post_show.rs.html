@@ -3,7 +3,7 @@
 @use super::misc::comment_block;
 @use sohablog_lib::interfaces::models::Content as ContentInterface;
 @use sohablog_lib::interfaces::models::Author as AuthorInterface;
-@use sohablog_lib::render::*;
+@use crate::render::*;
 
 @(ctx: &TemplateContext, title: &str, post: Box<ContentInterface>, previous_author: Option<Box<AuthorInterface>>)
 
@@ -11,9 +11,9 @@
 	<div class="paper grid">
 		<article>
 			<h1><a href="@post.link()">@if let Some(t) = post.title() {@t} else {Untitled}</a></h1>
-			<span class="meta">@date_format(post.time(), "%Y-%m-%d") / @(post.user().name()) / @if let Some(cat) = &post.category() {@cat.name()} else {Uncategorized}</span>
+			<span class="meta">@ctx.render_helper.date_format(post.time(), "%Y-%m-%d") / @(post.user().name()) / @if let Some(cat) = &post.category() {@cat.name()} else {Uncategorized}</span>
 			
-			@:markdown_to_html(post.content().as_str())
+			@:markdown_to_html(ctx, post.content().as_str())
 		</article>
 		<dl>
 			<dt><i class="icon-tag"></i></dt>
@@ -52,5 +52,5 @@
 			<button style="margin-top: .6em; display: none;" id="cancel-reply">取消回复</button>
 		</form>
 	</div>
-	@for comment in post.get_parent_comments() {@:comment_block(&comment, false, {@for comment in comment.children() {@:comment_block(&comment, true, {})}})}
+	@for comment in post.get_parent_comments() {@:comment_block(ctx, &comment, false, {@for comment in comment.children() {@:comment_block(ctx, &comment, true, {})}})}
 }, {})

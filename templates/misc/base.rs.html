@@ -1,6 +1,6 @@
 @use super::super::statics;
 @use super::font_face;
-@use sohablog_lib::render::*;
+@use crate::render::*;
 
 @(_ctx: &TemplateContext, title: &str, head: Content, meta: Content, content: Content, foot: Content)
 
@@ -10,7 +10,7 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-		<title>@title - 海上的宫殿<!-- TODO: blog title --></title>
+		<title>@title - 海上的宫殿</title><!-- TODO: blog title -->
 @:font_face()
 		<link href="/static/theme/@(statics::Soha_Notebook_Icons_css.name)" rel="stylesheet">
 		<link href="/static/theme/@(statics::paper_css.name)" rel="stylesheet">
