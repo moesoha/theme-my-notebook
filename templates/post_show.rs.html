@@ -22,23 +22,14 @@
 			<dd>@(post.get_tags_name().join(", "))</dd>
 		</dl>
 	</div>
-	<!-- TODO: -->
-	<!-- <p>
-		<b>上一篇: </b>
-		@if let Some(p) = post.get_neighbor_post(true) {
-		<a href="@p.link()">@if let Some(t) = p.title() {@t} else {Untitled}</a>
-		} else {
-		<i>没有了</i>
-		}
-	</p>
-	<p>
-		<b>下一篇: </b>
-		@if let Some(p) = post.get_neighbor_post(false) {
-		<a href="@p.link()">@if let Some(t) = p.title() {@t} else {Untitled}</a>
-		} else {
-		<i>没有了</i>
-		}
-	</p> -->
+	<nav>
+		<ul>@if let Some(p) = post.get_neighbor_post(true) {
+			<a href="@p.link()"><li class="yellow"><i class="icon-left"></i>&nbsp;@if let Some(t) = p.title() {@t} else {Untitled}</li></a>
+		}</ul>
+		<ul>@if let Some(p) = post.get_neighbor_post(false) {
+			<a href="@p.link()"><li class="pink">@if let Some(t) = p.title() {@t} else {Untitled}&nbsp;<i class="icon-right"></i></li></a>
+		}</ul>
+	</nav>
 
 	<div id="comment-form-wrapper">
 		<div class="paper line padding-small" id="comment-form">
