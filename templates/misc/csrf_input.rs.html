@@ -1,0 +1,5 @@
+@use sohablog_lib::render::*;
+
+@(ctx: &TemplateContext)
+
+<input type="hidden" name="@ctx.system_config.csrf_field_name" value="@ctx.session_info.csrf_token.as_str()" />

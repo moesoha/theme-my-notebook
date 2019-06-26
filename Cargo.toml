@@ -1,0 +1,15 @@
+[package]
+name = "sohablog-theme-my-notebook"
+version = "0.1.0"
+authors = ["Soha Jin <soha@lohu.info>"]
+edition = "2018"
+
+[dependencies]
+sohablog_lib = { path = "../oxidated-soha-blog/lib/" }
+mime = "0.3.13"
+
+[build-dependencies]
+ructe = { version = "0.6.2", features = [ "mime03" ] }
+
+[lib]
+crate-type = ["cdylib", "rlib"]

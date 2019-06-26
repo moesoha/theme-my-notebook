@@ -1,0 +1,11 @@
+@use sohablog_lib::utils::Page;
+
+@(page: Page)
+
+<div class="pagination">@if page.current > 1 {
+	<a class="page" href="?page=@(page.current - 1)"><i class="icon-left"></i></a>}
+	<a class="page">@page.current</a><!-- TODO: fix -->
+	<i class="icon-etc"></i>
+	<a class="page">@page.total</a>@if page.current < page.total {
+	<a class="page" href="?page=@(page.current + 1)">&nbsp;<i class="icon-right"></i></a>}
+</div>

@@ -1,0 +1,40 @@
+@use sohablog_lib::render::*;
+
+@(_ctx: &TemplateContext, title: &str, head: Content, meta: Content, content: Content, foot: Content)
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+		<title>@title - 海上的宫殿<!-- TODO: blog title --></title>
+		<link href="css/Soha-Notebook-Icons.css" rel="stylesheet">
+		<link href="css/paper.css" rel="stylesheet">
+@:meta()
+@:head()
+	</head>
+	<body>
+		<header>
+			<div class="tape"><div></div></div>
+			<h1>海上的宫殿<!-- TODO: blog title --></h1>
+			<!-- TODO: nav bar -->
+			<!-- <div class="header-nav">
+				<a href="">主页</a>
+				<a href="">分类1</a>
+				<a href="">分类2</a>
+				<a href="">分类3</a>
+				<a href="">分类4</a>
+				<a href="">链接2</a>
+				<a href="">链接3</a>
+				<a href="">链接3</a>
+			</div> -->
+		</header>
+		<div class="container">
+@:content()
+		</div>
+		<footer>Designed by <a href="https://sohaj.in">Soha Jin</a>.</footer>
+@:foot()
+		<script src="./paper.js"></script>
+	</body>
+</html>

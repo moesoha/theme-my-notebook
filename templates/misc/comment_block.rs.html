@@ -1,0 +1,18 @@
+@use sohablog_lib::interfaces::models::Comment;
+
+@(comment: &Box<Comment>, is_child: bool, children: Content)
+
+<div class="paper line padding-small" data-id="@comment.id()">@if is_child {
+	<div class="tape"><div></div></div>}
+	<div class="user-avatar">
+		@if let Some(url) = comment.author().avatar_url() {
+			<a@if let Some(link) = comment.author().link() { href="@link"}><img src="@url" /></a>} else {
+			<!-- TODO: if no avatar -->
+		}
+		<span><a@if let Some(link) = comment.author().link() { href="@link"}><b>@comment.author().name()</b></a></span>
+		<span><small>@comment.time()</small></span>
+	</div><!-- TODO: reply -->
+	@comment.text()
+
+	@:children()
+</div>
