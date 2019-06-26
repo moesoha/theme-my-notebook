@@ -27,6 +27,11 @@ mod render {
 		let s = ctx.render_helper.nl2br(s);
 		write!(out, "{}", s)
 	}
+
+	pub fn truncate_content(out: &mut dyn Write, ctx: &TemplateContext, s: &str, len: usize, truncate_mark: bool) -> IoResult<()> {
+		let s = ctx.render_helper.truncate_content(s, len, truncate_mark);
+		write!(out, "{}", s)
+	}
 }
 
 include!(concat!(env!("OUT_DIR"), "/templates/templates.rs"));

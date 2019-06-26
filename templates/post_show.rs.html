@@ -12,8 +12,9 @@
 		<article>
 			<h1><a href="@post.link()">@if let Some(t) = post.title() {@t} else {Untitled}</a></h1>
 			<span class="meta">@ctx.render_helper.date_format(post.time(), "%Y-%m-%d") / @(post.user().name()) / @if let Some(cat) = &post.category() {@cat.name()} else {Uncategorized}</span>
-			
-			@:markdown_to_html(ctx, post.content().as_str())
+			<div class="content">
+				@:markdown_to_html(ctx, post.content().as_str())
+			</div>
 		</article>
 		<dl>
 			<dt><i class="icon-tag"></i></dt>

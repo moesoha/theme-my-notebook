@@ -11,8 +11,9 @@
 			<article>
 				<h1><a href="@post.link()">@if let Some(t) = post.title() {@t} else {Untitled}</a></h1>
 				<span class="meta">@if let Some(cat) = post.category() {@cat.name() / }@ctx.render_helper.date_format(&post.time(), "%Y-%m-%d")</span>
-				<!-- TODO: truncate -->
-				<!-- <p>说着2018就过去了，按照往年的惯例，我是会在0点结束后趁热打铁写这个流水账的。今年因为同几位好友在外面吃了饭，回到家挺晚了，就留到了现在来写，不过至少还是1月1日，也算是趁热吧，那么流水账开始啦。</p> -->
+				<div class="content">
+					@:truncate_content(ctx, post.content(), 200, true)
+				</div>
 			</article>
 			<nav>
 				<ul></ul>
