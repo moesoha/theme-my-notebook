@@ -1,4 +1,5 @@
 @use super::misc::base;
+@use super::statics;
 @use super::misc::csrf_input;
 @use super::misc::comment_block;
 @use sohablog_lib::interfaces::models::Content as ContentInterface;
@@ -39,19 +40,26 @@
 		}
 	</p> -->
 
-	<div class="paper line padding-small">
-		<form id="comment-form" action="@post.get_comment_url()" method="POST">
-			@:csrf_input(ctx)
-			<h2>评论</h2>
-			<textarea name="text" placeholder="在这里写下你想说的……"></textarea>
-			@if let Some(u) = &ctx.user {<i>您已登入，将作为 @u.name() 发表。</i>} else {<div class="input-group">
-				<input placeholder="名字" type="text" name="name" @if let Some(o) = &previous_author {value="@o.name()" }/>
-				<input placeholder="邮箱" type="text" name="mail" @if let Some(o) = &previous_author {@if let Some(s) = &o.mail() {value="@s" }}/>
-				<input placeholder="网站(选填)" type="text" name="link" @if let Some(o) = &previous_author {@if let Some(s) = &o.link() {value="@s" }}/>
-			</div>}
-			<button style="margin-top: .6em;">发送</button><!-- submit -->
-			<button style="margin-top: .6em; display: none;" id="cancel-reply">取消回复</button>
-		</form>
+	<div id="comment-form-wrapper">
+		<div class="paper line padding-small" id="comment-form">
+			<form action="@post.get_comment_url()" method="POST">
+				@:csrf_input(ctx)
+				<h2>评论</h2>
+				<textarea name="text" placeholder="在这里写下你想说的……"></textarea>
+				@if let Some(u) = &ctx.user {<i>您已登入，将作为 @u.name() 发表。</i>} else {<div class="input-group">
+					<input placeholder="名字" type="text" name="name" @if let Some(o) = &previous_author {value="@o.name()" }/>
+					<input placeholder="邮箱" type="text" name="mail" @if let Some(o) = &previous_author {@if let Some(s) = &o.mail() {value="@s" }}/>
+					<input placeholder="网站(选填)" type="text" name="link" @if let Some(o) = &previous_author {@if let Some(s) = &o.link() {value="@s" }}/>
+				</div>}
+				<div style="margin-top: .6em;">
+					<input type="submit" value="发送">
+					<button style="display: none;" id="cancel-reply">取消回复</button>
+				</div>
+			</form>
+		</div>
 	</div>
 	@for comment in post.get_parent_comments() {@:comment_block(ctx, &comment, false, {@for comment in comment.children() {@:comment_block(ctx, &comment, true, {})}})}
-}, {})
+}, {
+	<script src="/static/theme/@(statics::jquery_3_4_1_min_js.name)"></script>
+	<script src="/static/theme/@(statics::comment_js.name)"></script>
+})
