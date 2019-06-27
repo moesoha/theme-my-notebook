@@ -9,7 +9,7 @@ sohablog_lib = { path = "../oxidated-soha-blog/lib/" }
 mime = "0.3.13"
 
 [build-dependencies]
-ructe = { version = "0.6.2", features = [ "mime03" ] }
+ructe = { version = "0.6.4", features = [ "mime03" ] }
 
 [lib]
 crate-type = ["cdylib", "rlib"]

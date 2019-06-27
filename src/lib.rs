@@ -32,6 +32,7 @@ mod render {
 	}
 }
 
+// TODO(ructe): prevent bare trait objects
 include!(concat!(env!("OUT_DIR"), "/templates/templates.rs"));
 impl StaticFile for &templates::statics::StaticFile {
 	fn content(&self) -> &'static [u8] { self.content }
@@ -50,17 +51,17 @@ impl PluginMetadata for MyNotebook {
 }
 impl Theme for MyNotebook {
 	fn identity(&self) -> &'static str { "my-notebook" }
-	fn post_list(&self, out: &mut Write, ctx: &TemplateContext, title: &str, page: Page, posts: Vec<Box<Content>>) -> Result<()> {
+	fn post_list(&self, out: &mut dyn Write, ctx: &TemplateContext, title: &str, page: Page, posts: Vec<Box<dyn Content>>) -> Result<()> {
 		templates::post_list(out, ctx, title, page, posts)?;
 		Ok(())
 	}
-	fn post_show(&self, out: &mut Write, ctx: &TemplateContext, title: &str, post: Box<Content>, previous_author: Option<Box<Author>>) -> Result<()> {
+	fn post_show(&self, out: &mut dyn Write, ctx: &TemplateContext, title: &str, post: Box<dyn Content>, previous_author: Option<Box<dyn Author>>) -> Result<()> {
 		templates::post_show(out, ctx, title, post, previous_author)?;
 		Ok(())
 	}
-	fn static_file(&self, name: &str) -> Option<Box<StaticFile>> {
+	fn static_file(&self, name: &str) -> Option<Box<dyn StaticFile>> {
 		if let Some(f) = templates::statics::StaticFile::get(name) {
-			Some(Box::new(f) as Box<StaticFile>)
+			Some(Box::new(f) as Box<dyn StaticFile>)
 		} else {
 			None
 		}
