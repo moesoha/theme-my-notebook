@@ -2,17 +2,17 @@
 @use super::statics;
 @use super::misc::csrf_input;
 @use super::misc::comment_block;
-@use sohablog_lib::interfaces::models::Content as ContentInterface;
+@use sohablog_lib::interfaces::models::Content as TheContentInterface;
 @use sohablog_lib::interfaces::models::Author as AuthorInterface;
 @use crate::render::*;
 
-@(ctx: &TemplateContext, title: &str, post: Box<ContentInterface>, previous_author: Option<Box<AuthorInterface>>)
+@(ctx: &TemplateContext, title: &str, post: Box<dyn TheContentInterface>, previous_author: Option<Box<dyn AuthorInterface>>)
 
 @:base(ctx, title, {}, {}, {
 	<div class="paper grid">
 		<article>
 			<h1><a href="@post.link()">@if let Some(t) = post.title() {@t} else {Untitled}</a></h1>
-			<span class="meta">@ctx.render_helper.date_format(post.time(), "%Y-%m-%d") / @(post.user().name()) / @if let Some(cat) = &post.category() {@cat.name()} else {Uncategorized}</span>
+			<span class="meta">@ctx.render_helper.date_format(&post.time().naive_local(), "%Y-%m-%d") / @(post.user().name()) / @if let Some(cat) = &post.category() {@cat.name()} else {Uncategorized}</span>
 			<div class="content">
 				@:markdown_to_html(ctx, post.content().as_str())
 			</div>

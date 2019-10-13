@@ -1,16 +1,16 @@
 @use super::misc::base;
 @use super::misc::paginator;
-@use sohablog_lib::interfaces::models::Content as ContentInterface;
+@use sohablog_lib::interfaces::models::Content as TheContentInterface;
 @use sohablog_lib::utils::Page;
 @use crate::render::*;
 
-@(ctx: &TemplateContext, title: &str, page: Page, posts: Vec<Box<ContentInterface>>)
+@(ctx: &TemplateContext, title: &str, page: Page, posts: Vec<Box<dyn TheContentInterface>>)
 
 @:base(ctx, title, {}, {}, {
 		@for post in posts {<div class="paper grid padding-small">
 			<article>
 				<h1><a href="@post.link()">@if let Some(t) = post.title() {@t} else {Untitled}</a></h1>
-				<span class="meta">@if let Some(cat) = post.category() {@cat.name() / }@ctx.render_helper.date_format(&post.time(), "%Y-%m-%d")</span>
+				<span class="meta">@if let Some(cat) = post.category() {@cat.name() / }@ctx.render_helper.date_format(&post.time().naive_local(), "%Y-%m-%d")</span>
 				<div class="content">
 					@:truncate_content(ctx, post.content(), 200, true)
 				</div>
